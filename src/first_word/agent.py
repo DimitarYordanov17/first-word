@@ -3,11 +3,14 @@ from livekit.agents import (
     Agent,
     AgentServer,
     AgentSession,
+    ConversationItemAddedEvent,
     JobContext,
     cli,
 )
 from livekit.plugins import silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
+
+from first_word.latency_log import LatencyLogger
 
 load_dotenv(".env.local")
 
@@ -39,6 +42,15 @@ async def entrypoint(ctx: JobContext):
         vad=silero.VAD.load(),
         turn_handling={"turn_detection": MultilingualModel()},
     )
+
+    latency = LatencyLogger(
+        config={"stt": STT_MODEL, "llm": LLM_MODEL, "tts": TTS_MODEL},
+        room=ctx.room.name,
+    )
+
+    @session.on("conversation_item_added")
+    def _on_item(ev: ConversationItemAddedEvent):
+        latency.on_item(ev.item)
 
     await session.start(agent=Receptionist(), room=ctx.room)
     await session.generate_reply(instructions="Greet the caller and ask how you can help.")
