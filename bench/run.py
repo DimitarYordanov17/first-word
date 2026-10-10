@@ -89,6 +89,16 @@ def cost(usage) -> dict:
     return spent
 
 
+def total_spent() -> dict:
+    """Spending across ALL experiments, so the caps hold for a whole night of runs."""
+    spent = defaultdict(float)
+    for usage_file in RESULTS.glob("*/usage.jsonl"):
+        for line in usage_file.open():
+            for provider, usd in json.loads(line)["usd"].items():
+                spent[provider] += usd
+    return spent
+
+
 def is_bad(row: dict) -> bool:
     if row.get("error"):
         return True
@@ -107,16 +117,11 @@ async def run(config_path: Path, limit: int | None, budget: dict) -> None:
     runs_path, usage_path = out / "runs.jsonl", out / "usage.jsonl"
 
     done = {key(json.loads(line)) for line in runs_path.open()} if runs_path.exists() else set()
-    spent = defaultdict(float)
-    if usage_path.exists():
-        for line in usage_path.open():
-            for provider, usd in json.loads(line)["usd"].items():
-                spent[provider] += usd
     plan = [p for p in make_plan(exp, clips) if key(p) not in done]
     if limit:
         plan = plan[:limit]
     log(out, f"{exp['name']}: {len(done)} done, {len(plan)} to run, "
-             f"spent so far {dict(spent) or 0}")
+             f"spent so far (all experiments) {dict(total_spent()) or 0}")
 
     executor = ThreadInferenceExecutor()
     await executor.preload()
@@ -145,11 +150,9 @@ async def run(config_path: Path, limit: int | None, budget: dict) -> None:
                         break
         except Exception as e:
             log(out, f"block {block_id} crashed: {type(e).__name__}: {e}")
-        block_cost = cost(harness.usage)
-        for provider, usd in block_cost.items():
-            spent[provider] += usd
         with usage_path.open("a") as f:
-            f.write(json.dumps({"block": block_id, "usd": block_cost}) + "\n")
+            f.write(json.dumps({"block": block_id, "usd": cost(harness.usage)}) + "\n")
+        spent = total_spent()
         over = [p for p, cap in budget.items() if spent[p] >= cap * 0.9]
         if over:
             stop = f"budget nearly used for {over}"
@@ -157,7 +160,7 @@ async def run(config_path: Path, limit: int | None, budget: dict) -> None:
             log(out, f"STOP: {stop}")
             break
 
-    finish(out, spent)
+    finish(out)
 
 
 def summary(row: dict) -> str:
@@ -177,9 +180,9 @@ def log(out: Path, msg: str) -> None:
         f.write(line + "\n")
 
 
-def finish(out: Path, spent: dict) -> None:
+def finish(out: Path) -> None:
     write_report(out)
-    log(out, f"done. spent {dict(spent)}. report: {out / 'report.md'}")
+    log(out, f"done. spent (all experiments) {dict(total_spent())}. report: {out / 'report.md'}")
 
 
 def pct(values: list[float], q: float) -> str:

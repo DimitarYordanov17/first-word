@@ -40,7 +40,7 @@ load_dotenv(Path(__file__).parent.parent / ".env.local")
 BENCH = Path(__file__).parent
 SAMPLE_RATE = 16000
 FRAME = SAMPLE_RATE // 100  # 10 ms
-REPLY_TIMEOUT_S = 6.0  # how long to wait for a reply after the caller's speech ends
+REPLY_TIMEOUT_S = 9.0  # how long to wait for a reply after the caller's speech ends (S4 can need 6s+)
 OVERLAP_WATCH_S = 4.0  # how long to watch the agent after playing an overlap clip
 
 
