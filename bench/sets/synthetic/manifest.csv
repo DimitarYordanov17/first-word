@@ -61,7 +61,7 @@ s2_06_p500,s2_06,S2,I'd prefer to move in around... the middle of December,500,5
 s2_06_p600,s2_06,S2,I'd prefer to move in around... the middle of December,600,600,wait
 s2_06_p800,s2_06,S2,I'd prefer to move in around... the middle of December,800,800,wait
 s2_06_p1000,s2_06,S2,I'd prefer to move in around... the middle of December,1000,1000,wait
-s3_01,s3_01,S3,Ok.,,,reply
+s3_01,s3_01,S3,Okay.,,,reply
 s3_02,s3_02,S3,Yes.,,,reply
 s3_03,s3_03,S3,No.,,,reply
 s3_04,s3_04,S3,Thursday.,,,reply
@@ -93,3 +93,4 @@ s6_03,s6_03,S6,Right.,,,continue
 s6_04,s6_04,S6,Uh-huh.,,,continue
 s6_05,s6_05,S6,Okay.,,,continue
 s6_06,s6_06,S6,I see.,,,continue
+setup_01,setup_01,SETUP,Can you tell me about the apartments you have available right now?,,,reply

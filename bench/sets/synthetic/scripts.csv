@@ -25,7 +25,7 @@ s2_03,S2,I could come by on | Thursday afternoon,wait
 s2_04,S2,We need at least | three bedrooms,wait
 s2_05,S2,The flat I liked was the one on | Park Avenue,wait
 s2_06,S2,I'd prefer to move in around | the middle of December,wait
-s3_01,S3,Ok.,reply
+s3_01,S3,Okay.,reply
 s3_02,S3,Yes.,reply
 s3_03,S3,No.,reply
 s3_04,S3,Thursday.,reply
@@ -57,3 +57,4 @@ s6_03,S6,Right.,continue
 s6_04,S6,Uh-huh.,continue
 s6_05,S6,Okay.,continue
 s6_06,S6,I see.,continue
+setup_01,SETUP,Can you tell me about the apartments you have available right now?,reply
