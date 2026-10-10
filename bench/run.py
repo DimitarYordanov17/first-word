@@ -40,6 +40,11 @@ PRICES = {
 }
 DEFAULT_BUDGET = {"deepgram": 50.0, "openai": 3.0}  # deepgram is free credit; openai is real money
 
+# Session usage undercounts what providers bill (the pilot's dashboards showed ~4.3x for
+# Deepgram, mostly TTS characters, and ~2x for OpenAI). Estimates are scaled by these
+# factors so the budget caps track real spending, with a margin.
+CALIBRATION = {"deepgram": 4.5, "openai": 2.2}
+
 
 def load_experiment(path: Path) -> dict:
     exp = tomllib.loads(path.read_text())
@@ -86,7 +91,7 @@ def cost(usage) -> dict:
         elif u.type == "llm_usage":
             rin, rout = next((r for m, r in PRICES["llm_per_m_tokens"].items() if m in model), (0.40, 1.60))
             spent["openai"] += (u.input_tokens * rin + u.output_tokens * rout) / 1e6
-    return spent
+    return {provider: usd * CALIBRATION[provider] for provider, usd in spent.items()}
 
 
 def total_spent() -> dict:
