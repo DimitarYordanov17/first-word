@@ -1,0 +1,59 @@
+id,set,text,expected
+s1_01,S1,Do you have any two bedroom flats available?,reply
+s1_02,S1,How much is the rent?,reply
+s1_03,S1,Is the apartment on Main Street still free?,reply
+s1_04,S1,Can I bring my cat?,reply
+s1_05,S1,What floor is the flat on and does the building have a lift?,reply
+s1_06,S1,I'm relocating for work next month and I need something furnished close to the train station.,reply
+s1_07,S1,Is heating included in the price?,reply
+s1_08,S1,When could I come and see it?,reply
+s1_09,S1,Do you require a guarantor?,reply
+s1_10,S1,How long is the minimum lease?,reply
+s1_11,S1,"My partner and I both work from home, so we need at least two rooms and a good internet connection.",reply
+s1_12,S1,Are there any studios under five hundred a month?,reply
+s1_13,S1,Is there a balcony?,reply
+s1_14,S1,What's the neighbourhood like at night?,reply
+s1_15,S1,Can I pay the deposit in two parts?,reply
+s1_16,S1,Who do I contact if something breaks?,reply
+s1_17,S1,Is the kitchen fully equipped?,reply
+s1_18,S1,"I saw your listing online yesterday, the one with the big windows, is it still available?",reply
+s1_19,S1,Do you have anything with a garden?,reply
+s1_20,S1,How quickly can I move in?,reply
+s2_01,S2,I'm looking for something near | the old town,wait
+s2_02,S2,My budget is about | seven hundred a month,wait
+s2_03,S2,I could come by on | Thursday afternoon,wait
+s2_04,S2,We need at least | three bedrooms,wait
+s2_05,S2,The flat I liked was the one on | Park Avenue,wait
+s2_06,S2,I'd prefer to move in around | the middle of December,wait
+s3_01,S3,Ok.,reply
+s3_02,S3,Yes.,reply
+s3_03,S3,No.,reply
+s3_04,S3,Thursday.,reply
+s3_05,S3,Sounds good.,reply
+s3_06,S3,Yes please.,reply
+s3_07,S3,No thank you.,reply
+s3_08,S3,Perfect.,reply
+s3_09,S3,That works.,reply
+s3_10,S3,Two bedrooms.,reply
+s4_01,S4,I'd like to book a viewing for,wait
+s4_02,S4,The one I'm interested in is,wait
+s4_03,S4,Could you tell me whether the,wait
+s4_04,S4,My phone number is,wait
+s4_05,S4,I was wondering if maybe,wait
+s4_06,S4,We are looking for something with a,wait
+s4_07,S4,Before I decide I want to,wait
+s4_08,S4,And also,wait
+s5_01,S5,"Wait, actually make it Friday.",stop
+s5_02,S5,"No, no, that's not what I asked.",stop
+s5_03,S5,"Sorry, can you say the price again?",stop
+s5_04,S5,"Hold on, I need to check something.",stop
+s5_05,S5,"Stop, I already know that.",stop
+s5_06,S5,"Excuse me, one more question.",stop
+s5_07,S5,"Actually, forget that one.",stop
+s5_08,S5,"Sorry to interrupt, but is parking included?",stop
+s6_01,S6,Mm-hm.,continue
+s6_02,S6,Yeah.,continue
+s6_03,S6,Right.,continue
+s6_04,S6,Uh-huh.,continue
+s6_05,S6,Okay.,continue
+s6_06,S6,I see.,continue
