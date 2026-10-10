@@ -15,13 +15,7 @@ from livekit.agents.llm import ChatMessage
 
 METRICS_DIR = Path("metrics")
 
-FIELDS = [
-    "ts",
-    "room",
-    "turn",
-    "stt",
-    "llm",
-    "tts",
+METRIC_FIELDS = [
     "user_text",
     "agent_text",
     "end_of_turn_delay",
@@ -35,15 +29,16 @@ FIELDS = [
 
 
 class LatencyLogger:
-    def __init__(self, config: dict[str, str], room: str) -> None:
+    def __init__(self, config: dict, room: str) -> None:
         self.config = config
+        self.fields = ["ts", "room", "turn", *config, *METRIC_FIELDS]
         self.room = room
         self.turn = 0
         self.pending_user: ChatMessage | None = None
         METRICS_DIR.mkdir(exist_ok=True)
         self.path = METRICS_DIR / f"turns-{time.strftime('%Y%m%d-%H%M%S')}.csv"
         with self.path.open("w", newline="") as f:
-            csv.DictWriter(f, FIELDS).writeheader()
+            csv.DictWriter(f, self.fields).writeheader()
 
     def on_item(self, item) -> None:
         if not isinstance(item, ChatMessage):
@@ -74,7 +69,7 @@ class LatencyLogger:
             "interrupted": agent.interrupted,
         }
         with self.path.open("a", newline="") as f:
-            csv.DictWriter(f, FIELDS).writerow(row)
+            csv.DictWriter(f, self.fields).writerow(row)
 
 
 def _ms(seconds: float | None) -> int | str:
