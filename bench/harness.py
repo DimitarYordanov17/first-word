@@ -35,7 +35,7 @@ from livekit.agents.voice import io
 from first_word.agent import Receptionist
 from first_word.pipeline import PipelineConfig, build_session
 
-load_dotenv(".env.local")
+load_dotenv(Path(__file__).parent.parent / ".env.local")
 
 BENCH = Path(__file__).parent
 SAMPLE_RATE = 16000

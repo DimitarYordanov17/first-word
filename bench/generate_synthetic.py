@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 from livekit.agents.utils import http_context
 from livekit.plugins import deepgram
 
-load_dotenv(".env.local")
+load_dotenv(Path(__file__).parent.parent / ".env.local")
 
 SET_DIR = Path(__file__).parent / "sets" / "synthetic"
 SCRIPTS = SET_DIR / "scripts.csv"
