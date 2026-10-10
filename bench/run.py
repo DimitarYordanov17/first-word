@@ -38,7 +38,9 @@ PRICES = {
     "tts_per_1k_chars": {"aura-2": 0.030},
     "llm_per_m_tokens": {"gpt-4.1-mini": (0.40, 1.60), "gpt-4.1-nano": (0.10, 0.40)},
 }
-DEFAULT_BUDGET = {"deepgram": 50.0, "openai": 3.0}  # deepgram is free credit; openai is real money
+# Neither provider can bill beyond these: the Deepgram credit has no card attached and the
+# OpenAI balance is prepaid with auto-recharge off. The caps only reserve some credit.
+DEFAULT_BUDGET = {"deepgram": 150.0, "openai": 4.2}
 
 # Session usage undercounts what providers bill (the pilot's dashboards showed ~4.3x for
 # Deepgram, mostly TTS characters, and ~2x for OpenAI). Estimates are scaled by these
