@@ -19,6 +19,9 @@ class PipelineConfig:
     llm_model: str = "gpt-4.1-mini"
     tts_model: str = "aura-2-andromeda-en"
     language: str = "en-US"
+    # Flux only: how confident Flux must be before sending an early ("preflight")
+    # transcript that preemptive generation can start on
+    flux_eager_eot: float = 0.5
 
     # VAD: silence needed before "end of speech"
     vad_min_silence: float = 0.55
@@ -39,8 +42,17 @@ class PipelineConfig:
     # interruptions while the agent speaks: "adaptive" = LiveKit's cloud model, "vad" = duration rule
     interruption_mode: Literal["adaptive", "vad"] = "adaptive"
 
+    # agent prompt: "default" or "short_first" (opens every reply with a 1-3 word sentence)
+    prompt: Literal["default", "short_first"] = "default"
+
     def as_dict(self) -> dict:
         return asdict(self)
+
+
+def _stt(cfg: PipelineConfig):
+    if cfg.stt_model.startswith("flux"):
+        return deepgram.STTv2(model=cfg.stt_model, eager_eot_threshold=cfg.flux_eager_eot)
+    return deepgram.STT(model=cfg.stt_model, language=cfg.language)
 
 
 def build_session(cfg: PipelineConfig) -> AgentSession:
@@ -53,7 +65,7 @@ def build_session(cfg: PipelineConfig) -> AgentSession:
     turn_detection = detector() if callable(detector) else detector
 
     return AgentSession(
-        stt=deepgram.STT(model=cfg.stt_model, language=cfg.language),
+        stt=_stt(cfg),
         llm=openai.LLM(model=cfg.llm_model),
         tts=deepgram.TTS(model=cfg.tts_model),
         vad=silero.VAD.load(min_silence_duration=cfg.vad_min_silence),

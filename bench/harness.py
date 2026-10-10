@@ -231,7 +231,7 @@ class Harness:
         self.session.output.audio = self.speaker
         self.items: list[ConversationItemAddedEvent] = []
         self.session.on("conversation_item_added", self.items.append)
-        self.agent = Receptionist()
+        self.agent = Receptionist(self.cfg.prompt)
         await self.session.start(agent=self.agent, record=False)
         # warm-up: opens the provider connections so the first measured clip isn't a cold start
         await self._run_latency(self.setup_clip)
