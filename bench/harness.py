@@ -44,6 +44,11 @@ REPLY_TIMEOUT_S = 6.0  # how long to wait for a reply after the caller's speech 
 OVERLAP_WATCH_S = 4.0  # how long to watch the agent after playing an overlap clip
 
 
+# the natural manifest uses category names; map them onto the synthetic set codes
+CATEGORY_TO_SET = {"clean": "S1", "pause": "S2", "short": "S3", "interrupt": "S5",
+                   "backchannel": "S6", "tool": "S7"}
+
+
 @dataclass(frozen=True)
 class Clip:
     id: str
@@ -53,6 +58,7 @@ class Clip:
     speech_end_s: float  # when the caller's last word ends, relative to clip start
     pause_ms: str = ""
     measured_pause_ms: str = ""
+    holdout: bool = False
 
     @property
     def duration_s(self) -> float:
@@ -69,12 +75,13 @@ def load_clips(set_name: str) -> dict[str, Clip]:
             audio = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16)
         clips[row["id"]] = Clip(
             id=row["id"],
-            set=row.get("set") or row.get("category", ""),
+            set=row.get("set") or CATEGORY_TO_SET[row["category"]],
             expected=row["expected"],
             audio=audio,
             speech_end_s=_speech_end(audio),
             pause_ms=row.get("pause_ms", ""),
             measured_pause_ms=row.get("measured_pause_ms", ""),
+            holdout=row.get("holdout") == "yes",
         )
     return clips
 
@@ -203,14 +210,18 @@ class FakeSpeaker(io.AudioOutput):
 class Harness:
     """One warm session for one config. Use as `async with Harness(cfg) as h:`."""
 
-    def __init__(self, cfg: PipelineConfig, setup_clip: Clip) -> None:
+    def __init__(self, cfg: PipelineConfig, setup_clip: Clip,
+                 executor: ThreadInferenceExecutor | None = None) -> None:
         self.cfg = cfg
         self.setup_clip = setup_clip
+        self.executor = executor  # pass a preloaded one to share the model across sessions
+        self.usage = None  # the session's model usage, filled in on exit
 
     async def __aenter__(self) -> "Harness":
-        executor = ThreadInferenceExecutor()
-        await executor.preload()
-        self._job = fake_job_context(inference_executor=executor)
+        if self.executor is None:
+            self.executor = ThreadInferenceExecutor()
+            await self.executor.preload()
+        self._job = fake_job_context(inference_executor=self.executor)
         self._job.__enter__()
         self._http = http_context.open()  # the HTTP session a real worker would provide
         await self._http.__aenter__()
@@ -227,6 +238,7 @@ class Harness:
         return self
 
     async def __aexit__(self, *exc) -> None:
+        self.usage = self.session.usage
         await self.session.aclose()
         await self.mic.aclose()
         await self._http.__aexit__(*exc)

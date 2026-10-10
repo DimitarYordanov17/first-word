@@ -3,3 +3,6 @@
 __pycache__/
 metrics/*.csv
 bench/sets/*/audio/
+results/*/runs.jsonl
+results/*/usage.jsonl
+results/*/runner.log
