@@ -1,0 +1,10 @@
+# Interruption handling: LiveKit's adaptive cloud model vs the plain VAD duration rule.
+name = "e6_interruption"
+dataset = "synthetic"
+sets = ["S5", "S6"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.vad_mode]
+interruption_mode = "vad"

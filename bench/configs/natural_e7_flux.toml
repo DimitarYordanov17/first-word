@@ -1,0 +1,10 @@
+# Deepgram Flux (early 'preflight' transcripts) vs nova-3. Note: Flux also changes how transcripts are finalised, so this compares two STT setups, not one setting.
+name = "natural_e7_flux"
+dataset = "natural"
+sets = ["S1", "S2", "S3"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.flux]
+stt_model = "flux-general-en"

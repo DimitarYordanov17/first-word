@@ -1,0 +1,10 @@
+# TTS also starting before the turn is committed.
+name = "natural_e5_preemptive_tts"
+dataset = "natural"
+sets = ["S1", "S3"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.preemptive_tts_on]
+preemptive_tts = true

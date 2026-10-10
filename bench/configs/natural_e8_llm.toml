@@ -1,0 +1,10 @@
+# A smaller, faster LLM.
+name = "natural_e8_llm"
+dataset = "natural"
+sets = ["S1"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.gpt_4_1_nano]
+llm_model = "gpt-4.1-nano"

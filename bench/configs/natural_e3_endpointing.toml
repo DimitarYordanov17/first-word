@@ -1,0 +1,10 @@
+# Fixed vs dynamic endpointing. Dynamic adapts to the caller's pauses across the clips of a session.
+name = "natural_e3_endpointing"
+dataset = "natural"
+sets = ["S1", "S2", "S3"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.dynamic]
+endpointing_mode = "dynamic"

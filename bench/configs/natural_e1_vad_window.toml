@@ -1,0 +1,13 @@
+# How long the VAD waits in silence before 'end of speech'.
+name = "natural_e1_vad_window"
+dataset = "natural"
+sets = ["S1", "S2", "S3"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.vad_0_4]
+vad_min_silence = 0.4
+
+[variants.vad_0_3]
+vad_min_silence = 0.3
