@@ -1,10 +1,8 @@
-# Pilot: checks the whole chain (harness, runner, budget, report) before a long run.
+# Pilot: one pass of every set type on the baseline, to check the whole chain
+# (harness, runner, budget, report) and the real cost before a long run.
 name = "pilot"
 dataset = "synthetic"
 sets = ["S1", "S2", "S3", "S4", "S5", "S6"]
 repeats = 1
 
 [variants.baseline]
-
-[variants.vad_0_3]
-vad_min_silence = 0.3
