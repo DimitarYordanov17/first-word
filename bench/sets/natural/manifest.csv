@@ -1,0 +1,37 @@
+id,category,text,note,expected,holdout
+01,clean,Hi do you have any two bedroom flats available,normal pace,reply,no
+02,clean,How much is the rent for the one near the centre,normal pace,reply,no
+03,clean,Are pets allowed in any of your apartments,normal pace,reply,no
+04,clean,I'd like to see something this week if possible,normal pace,reply,no
+05,clean,What's the deposit and is it refundable,normal pace,reply,no
+06,clean,Is parking included or is that extra,normal pace,reply,no
+07,clean,Can you tell me which areas you have listings in,normal pace,reply,yes
+08,clean,I'm moving to Plovdiv next month and need a place,normal pace,reply,yes
+09,pause,I'm looking for something near... the centre,pause to think after 'near',wait,no
+10,pause,My budget is around... let's say six hundred,pause to think after 'around',wait,no
+11,pause,I could come on... Tuesday I think,pause after 'on',wait,no
+12,pause,The flat I saw was on... what was the street... Ivan Vazov,two pauses,wait,no
+13,pause,Ideally two bedrooms but... one could work too,pause after 'but',wait,no
+14,pause,My name is... Dimitar Dimitrov,pause after 'is',wait,no
+15,pause,I need it from... the first of November,pause after 'from',wait,yes
+16,pause,Can I bring... um... my dog,'um' in the middle,wait,yes
+17,short,Ok,just the word,reply,no
+18,short,Yes please,just the words,reply,no
+19,short,Tuesday,just the word,reply,no
+20,short,No thanks,just the words,reply,no
+21,short,Sounds good,just the words,reply,yes
+22,interrupt,Wait actually make it Wednesday,as if cutting the agent off,stop,no
+23,interrupt,No no that's not what I meant,as if cutting the agent off,stop,no
+24,interrupt,Sorry can you repeat the price,as if cutting the agent off,stop,no
+25,interrupt,Hold on let me check my calendar,as if cutting the agent off,stop,no
+26,interrupt,Stop I already have that,as if cutting the agent off,stop,yes
+27,backchannel,Mm-hm,quietly as if listening,continue,no
+28,backchannel,Yeah,quietly as if listening,continue,no
+29,backchannel,Right,quietly as if listening,continue,no
+30,backchannel,Uh-huh,quietly as if listening,continue,no
+31,backchannel,Okay okay,quietly as if listening,continue,yes
+32,tool,Is Tuesday at four free for a viewing,normal pace,tool then reply,no
+33,tool,Book me in for the Ivan Vazov flat please,normal pace,tool then reply,no
+34,tool,Do you have anything under five hundred,normal pace,tool then reply,no
+35,tool,Can you check if I'm already in your system,normal pace,tool then reply,no
+36,tool,What times are free on Friday,normal pace,tool then reply,yes
