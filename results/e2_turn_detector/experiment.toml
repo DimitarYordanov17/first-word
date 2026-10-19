@@ -1,0 +1,19 @@
+# Old local text model vs LiveKit's newer audio model vs no model (VAD only).
+name = "e2_turn_detector"
+dataset = "synthetic"
+sets = ["S1", "S2", "S3", "S4"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.audio]
+turn_detector = "audio"
+
+[variants.none]
+turn_detector = "none"
+
+# the audio model with its own, tighter endpointing defaults
+[variants.audio_own_defaults]
+turn_detector = "audio"
+min_delay = 0.3
+max_delay = 2.5

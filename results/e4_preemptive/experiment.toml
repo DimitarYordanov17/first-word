@@ -1,0 +1,10 @@
+# LLM starting before the turn is committed, on vs off.
+name = "e4_preemptive"
+dataset = "synthetic"
+sets = ["S1", "S3"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.preemptive_off]
+preemptive_generation = false

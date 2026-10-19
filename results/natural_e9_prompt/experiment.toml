@@ -1,0 +1,10 @@
+# Prompting a 1-3 word first sentence so TTS can start sooner.
+name = "natural_e9_prompt"
+dataset = "natural"
+sets = ["S1"]
+repeats = 3
+
+[variants.baseline]
+
+[variants.short_first]
+prompt = "short_first"
